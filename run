@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -e -o pipefail
+
+SCRIPT_DIR="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+
+function start { # [...frontend|backend]: builds & starts containers (detached)
+  (cd "$SCRIPT_DIR" && docker-compose up -d --build "$@" && logs "$@")
+}
+
+function logs { # [...frontend|backend]: tails logs of containers
+  (cd "$SCRIPT_DIR" && docker-compose logs -f --tail 100 "$@")
+}
+
+function stop { # [...frontend|backend]: stops containers
+  (cd "$SCRIPT_DIR" && docker-compose stop "$@")
+}
+
+function remove { # [...frontend|backend]: removes containers
+  (cd "$SCRIPT_DIR" && docker-compose rm -f -s -v "$@")
+}
+
+if [[ $# -eq 0 || "$1" == "help" ]]; then
+  sed -En 's/^function (.*) \{( #)?/\1/p' "$0"
+else
+  "$@"
+fi

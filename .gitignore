@@ -138,4 +138,5 @@ dmypy.json
 cython_debug/
 
 # App-specific ignores
+settings.json
 backend/backend/db.sqlite3

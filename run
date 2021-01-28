@@ -19,6 +19,20 @@ function remove { # [...frontend|backend]: removes containers
   (cd "$SCRIPT_DIR" && docker-compose rm -f -s -v "$@")
 }
 
+function poetry { # runs poetry in backend container
+  (
+    cd "$SCRIPT_DIR"
+    docker-compose run --rm backend poetry "$@"
+  )
+}
+
+function manage { # runs django manage.py in backend container
+  (
+    cd "$SCRIPT_DIR"
+    docker-compose run --rm  backend python 'backend/manage.py' "$@"
+  )
+}
+
 if [[ $# -eq 0 || "$1" == "help" ]]; then
   sed -En 's/^function (.*) \{( #)?/\1/p' "$0"
 else

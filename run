@@ -33,6 +33,17 @@ function manage { # runs django manage.py in backend container
   )
 }
 
+function npm { # runs npm in frontend container
+  (
+    cd "$SCRIPT_DIR"
+    if [ -z `docker-compose ps -q frontend` ] || [ -z `docker ps -q --no-trunc | grep $(docker-compose ps -q frontend)` ]; then
+      docker-compose run --rm frontend npm "$@"
+    else
+      docker-compose exec frontend npm "$@"
+    fi
+  )
+}
+
 if [[ $# -eq 0 || "$1" == "help" ]]; then
   sed -En 's/^function (.*) \{( #)?/\1/p' "$0"
 else

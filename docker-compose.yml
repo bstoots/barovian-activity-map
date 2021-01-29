@@ -8,3 +8,11 @@ services:
       - 8000:8000
     volumes:
       - './backend:/usr/src/app'
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    ports:
+      - 3000:3000
+    volumes:
+      - './frontend:/home/node/app'

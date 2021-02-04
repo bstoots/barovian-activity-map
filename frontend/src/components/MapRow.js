@@ -48,7 +48,7 @@ class MapRow extends React.Component {
             />
             {
               this.assets.map((asset) =>
-                <Marker position={[asset.y, asset.x]}></Marker>
+                <Marker key={asset.id} position={[asset.y, asset.x]}></Marker>
               )
             }
           </MapContainer>

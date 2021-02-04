@@ -1,49 +1,67 @@
 import './App.css';
 import Container from 'react-bootstrap/Container';
-import Navbar from 'react-bootstrap/Navbar';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-
-import { MapContainer, ImageOverlay, Marker } from 'react-leaflet'
-import { CRS } from 'leaflet';
+import Navigation from './components/Navigation';
+import MapRow from './components/MapRow';
 
 function App() {
 
-  const bounds = [[0, 0], [3225, 5025]];
-  const center = [1612.5, 2512.5];
+  // @TODO - Fetch this data from the Django API
+  const assets = [
+    {
+        "id": 3,
+        "name": "Vallaki",
+        "description": "The Town of Vallaki",
+        "x": 2020,
+        "y": 2155
+    },
+    {
+      "id": 4,
+      "name": "Krezk",
+      "description": "The Village of Krezk",
+      "x": 580,
+      "y": 2250
+    },
+    {
+      "id": 5,
+      "name": "Barovia",
+      "description": "The Village of Barovia",
+      "x": 3950,
+      "y": 1240
+    },
+    {
+      "id": 6,
+      "name": "Ravenloft",
+      "description": "Castle Ravenloft",
+      "x": 3595,
+      "y": 1580
+    },
+  ];
 
-  // const village_of_barovia = [1240, 3950];
-  const vallaki = [2155, 2020];
-  // const krezk = [2250, 580];
-  // const ravenloft = [1580, 3595];
+  // @TODO - Fetch this data from the Django API
+  const events = [
+    {
+      "id": 1,
+      "event_type_id": 1,
+      "name": "Vampire Sighting",
+      "description": "Sharp teeth, meanacing glare, etc",
+      "x": 2030,
+      "y": 2145
+    },
+    {
+      "id": 2,
+      "event_type_id": 2,
+      "name": "Werewolf Sighting",
+      "description": "Sharp teeth, smells bad, etc",
+      "x": 590,
+      "y": 2240
+    },
+  ]
 
   return (
     <div className="App">
-      <Navbar variant="dark" bg="dark">
-        <Navbar.Brand href="#">Barovian Activity Map</Navbar.Brand>
-      </Navbar>
-
-      {/* cos201.jpg: 5025 x 3225 */}
       <Container fluid className="p-0">
-        <Row noGutters>
-          <Col>
-          <MapContainer
-            center={center}
-            zoom={-2}
-            maxZoom={2}
-            minZoom={-2}
-            maxBounds={ bounds }
-            crs={CRS.Simple}
-            id="mapId"
-          >
-            <ImageOverlay
-              url='cos201.jpg'
-              bounds={ bounds }
-            />
-            <Marker position={vallaki}></Marker>
-          </MapContainer>
-          </Col>
-        </Row>
+        <Navigation assets={assets} events={events}/>
+        <MapRow assets={assets} events={events}/>
       </Container>
     </div>
   );

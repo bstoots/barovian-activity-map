@@ -20,6 +20,8 @@ from barovian_activity_map import views
 
 router = routers.DefaultRouter()
 router.register(r'assets', views.AssetView, 'asset')
+router.register(r'event_types', views.EventTypeView, 'event_type')
+router.register(r'events', views.EventView, 'event')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

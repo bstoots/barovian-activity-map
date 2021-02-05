@@ -22,6 +22,15 @@ function remove { # [...frontend|backend]: removes containers
 function poetry { # runs poetry in backend container
   (
     cd "$SCRIPT_DIR"
+    if [ -z `docker-compose ps -q backend` ] || [ -z `docker ps -q --no-trunc | grep $(docker-compose ps -q backend)` ]; then
+      docker-compose run --rm backend poetry "$@"
+    else
+      docker-compose exec backend poetry "$@"
+    fi
+  )
+
+  (
+    cd "$SCRIPT_DIR"
     docker-compose run --rm backend poetry "$@"
   )
 }
@@ -29,7 +38,11 @@ function poetry { # runs poetry in backend container
 function manage { # runs django manage.py in backend container
   (
     cd "$SCRIPT_DIR"
-    docker-compose run --rm  backend python 'backend/manage.py' "$@"
+    if [ -z `docker-compose ps -q backend` ] || [ -z `docker ps -q --no-trunc | grep $(docker-compose ps -q backend)` ]; then
+      docker-compose run --rm backend python 'backend/manage.py' "$@"
+    else
+      docker-compose exec backend python 'backend/manage.py' "$@"
+    fi
   )
 }
 

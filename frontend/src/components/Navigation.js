@@ -8,9 +8,7 @@ class Navigation extends React.Component {
   
   constructor (props) {
     super(props);
-    this.state = {
-      assetCount: 0,
-    };
+    this.state = {};
   }
 
   getAssetCount (assets) {

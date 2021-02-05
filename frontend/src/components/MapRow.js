@@ -1,7 +1,7 @@
 import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { MapContainer, ImageOverlay, Marker } from 'react-leaflet'
+import { MapContainer, ImageOverlay, Marker, Tooltip } from 'react-leaflet'
 import { CRS } from 'leaflet';
 // import { Icon } from 'leaflet';
 
@@ -47,7 +47,9 @@ class MapRow extends React.Component {
             />
             {
               this.props.assets.map((asset) =>
-                <Marker key={asset.id} position={[asset.y, asset.x]}></Marker>
+                <Marker key={asset.id} position={[asset.y, asset.x]}>
+                  <Tooltip>{asset.description}</Tooltip>
+                </Marker>
               )
             }
           </MapContainer>

@@ -15,5 +15,13 @@ class EventTypeSerializer(serializers.ModelSerializer):
 
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
-        model = EventType
-        fields = ('event_type_id', 'name', 'description')
+        model = Event
+        fields = (
+            'event_id',
+            'event_type_id',
+            'name',
+            'description',
+            'x',
+            'y',
+            'created'
+        )

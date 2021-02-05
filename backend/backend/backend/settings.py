@@ -79,8 +79,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'barovian_activity_map',
+        'USER': 'strahd',
+        'PASSWORD': 'dont_put_plaintext_passwords_here',
+        'HOST': 'barovian-activity-map_db_1',
+        'PORT': '5432',
     }
 }
 

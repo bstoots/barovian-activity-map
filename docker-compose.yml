@@ -1,5 +1,14 @@
 version: '3.7'
 services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: strahd
+      POSTGRES_PASSWORD: dont_put_plaintext_passwords_here
+      POSTGRES_DB: barovian_activity_map
+    ports:
+      - 5432:5432
   backend:
     build:
       context: ./backend

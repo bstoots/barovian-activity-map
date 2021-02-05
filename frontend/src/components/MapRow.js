@@ -4,17 +4,16 @@ import Col from 'react-bootstrap/Col';
 import { MapContainer, ImageOverlay, Marker } from 'react-leaflet'
 import { CRS } from 'leaflet';
 // import { Icon } from 'leaflet';
-import _ from 'lodash';
 
 class MapRow extends React.Component {
 
   constructor (props) {
     super(props);
-    // CRS Simple coordinates in the form: [y, x]
-    this.bounds = [[0, 0], [3225, 5025]];
-    this.center = [1612.5, 2512.5];
-    this.assets = _.get(props, 'assets', []);
-    this.events = _.get(props, 'events', []);
+    this.state = {
+      // CRS Simple coordinates in the form: [y, x]
+      bounds: [[0, 0], [3225, 5025]],
+      center: [1612.5, 2512.5],
+    }
   }
 
   render() {
@@ -34,20 +33,20 @@ class MapRow extends React.Component {
       <Row noGutters>
         <Col id="mapCol">
           <MapContainer
-            center={this.center}
+            center={this.state.center}
             crs={CRS.Simple}
             id="mapId"
-            maxBounds={this.bounds}
+            maxBounds={this.state.bounds}
             maxZoom={2}
             minZoom={-2}
             zoom={-2}
           >
             <ImageOverlay
-              bounds={this.bounds}
+              bounds={this.state.bounds}
               url='cos201.jpg'
             />
             {
-              this.assets.map((asset) =>
+              this.props.assets.map((asset) =>
                 <Marker key={asset.id} position={[asset.y, asset.x]}></Marker>
               )
             }

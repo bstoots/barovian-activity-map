@@ -12,14 +12,15 @@ class Navigation extends React.Component {
   }
 
   getAssetCount (assets) {
-    let assetCount = 0;
-    if (_.isArrayLikeObject(assets)) {
+    let assetCount = '?';
+    if (_.isArray(assets)) {
       assetCount = _.size(assets);
     }
     return assetCount;
   }
 
   render () {
+    const assetsIsArray = _.isArray(this.props.assets);
     const assetCount = this.getAssetCount(this.props.assets);
     return (
       <Navbar variant="dark" bg="dark">
@@ -27,10 +28,11 @@ class Navigation extends React.Component {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <NavDropdown title={`Assets: ${assetCount}`} id="basic-nav-dropdown">
-              {
-                this.props.assets.map((asset) => 
-                  <NavDropdown.Item href="" key={asset.id}>{asset.name}</NavDropdown.Item>
-                )
+              {assetsIsArray
+                ? (assetCount === 0)
+                  ? <NavDropdown.Item href="" key="empty">No Assets</NavDropdown.Item>
+                  : this.props.assets.map((asset) => <NavDropdown.Item href="" key={asset.id}>{asset.name}</NavDropdown.Item>)
+                : <NavDropdown.Item href="" key="empty">Assets Unknown</NavDropdown.Item>
               }
             </NavDropdown>
           </Nav>

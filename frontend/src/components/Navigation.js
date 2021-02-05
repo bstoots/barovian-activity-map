@@ -10,7 +10,6 @@ class Navigation extends React.Component {
     super(props);
     this.state = {
       assetCount: 0,
-      eventCount: 0,
     };
   }
 
@@ -22,17 +21,8 @@ class Navigation extends React.Component {
     return assetCount;
   }
 
-  getEventCount (events) {
-    let eventCount = 0;
-    if (_.isArrayLikeObject(events)) {
-      eventCount = _.size(events);
-    }
-    return eventCount;
-  }
-
   render () {
     const assetCount = this.getAssetCount(this.props.assets);
-    const eventCount = this.getEventCount(this.props.events);
     return (
       <Navbar variant="dark" bg="dark">
         <Navbar.Brand href="#">Barovian Activity Map</Navbar.Brand>
@@ -42,13 +32,6 @@ class Navigation extends React.Component {
               {
                 this.props.assets.map((asset) => 
                   <NavDropdown.Item href="" key={asset.id}>{asset.name}</NavDropdown.Item>
-                )
-              }
-            </NavDropdown>
-            <NavDropdown title={`Events: ${eventCount}`} id="basic-nav-dropdown">
-              {
-                this.props.events.map((event) => 
-                  <NavDropdown.Item href="" key={event.id}>{event.name}</NavDropdown.Item>
                 )
               }
             </NavDropdown>

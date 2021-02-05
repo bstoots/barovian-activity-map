@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/Col';
 import { MapContainer, ImageOverlay, Marker, Tooltip } from 'react-leaflet'
 import { CRS } from 'leaflet';
 // import { Icon } from 'leaflet';
+import _ from 'lodash';
 
 class MapRow extends React.Component {
 
@@ -29,6 +30,8 @@ class MapRow extends React.Component {
     //   shadowAnchor: [22, 94]
     // });
 
+    const assetsIsArray = _.isArray(this.props.assets);
+
     return (
       <Row noGutters>
         <Col id="mapCol">
@@ -45,7 +48,7 @@ class MapRow extends React.Component {
               bounds={this.state.bounds}
               url='cos201.jpg'
             />
-            {
+            {assetsIsArray &&
               this.props.assets.map((asset) =>
                 <Marker key={asset.id} position={[asset.y, asset.x]}>
                   <Tooltip>{asset.description}</Tooltip>

@@ -6,8 +6,17 @@ import { CRS } from 'leaflet';
 // import { Icon } from 'leaflet';
 import _ from 'lodash';
 
+/**
+ * Defines a Bootstrap row containing a Leaflet map representing the lands of Barovia
+ */
 class MapRow extends React.Component {
 
+  /**
+   * Constructor
+   * 
+   * @param {object} props       React props
+   * @param {array} props.assets List of assets to render markers for on the map
+   */
   constructor (props) {
     super(props);
     this.state = {
@@ -17,6 +26,9 @@ class MapRow extends React.Component {
     }
   }
 
+  /**
+   * Renders the component
+   */
   render() {
 
     // @TODO - Define different icons for Assets and Events

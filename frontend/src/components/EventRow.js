@@ -3,13 +3,25 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
 
+/**
+ * Defines a Bootstrap row containing a table structure for displaying events
+ */
 class EventRow extends React.Component {
 
+  /**
+   * Constructor
+   * 
+   * @param {object} props       React props
+   * @param {array} props.events List of events to populate in the table
+   */
   constructor(props) {
     super(props);
     this.state = {}
   }
 
+  /**
+   * Renders the component
+   */
   render() {
     return (
       <Row noGutters>

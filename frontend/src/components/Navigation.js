@@ -4,13 +4,28 @@ import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import _ from 'lodash';
 
+/**
+ * Defines a Bootstrap Navbar showing assets and other navigable links
+ */
 class Navigation extends React.Component {
   
+  /**
+   * Constructor
+   * 
+   * @param {object} props       React props
+   * @param {array} props.assets List of assets to display in a nav dropdown
+   */
   constructor (props) {
     super(props);
     this.state = {};
   }
 
+  /**
+   * Returns the count for a list of assets
+   * 
+   * @param {array} assets List of assets
+   * @returns {mixed}      Returns the asset count or '?' if the assets param wasn't an array
+   */
   getAssetCount (assets) {
     let assetCount = '?';
     if (_.isArray(assets)) {
@@ -19,6 +34,9 @@ class Navigation extends React.Component {
     return assetCount;
   }
 
+  /**
+   * Renders the component
+   */
   render () {
     const assetsIsArray = _.isArray(this.props.assets);
     const assetCount = this.getAssetCount(this.props.assets);

@@ -4,7 +4,7 @@ set -e -o pipefail
 SCRIPT_DIR="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
 function start { # [...frontend|backend]: builds & starts containers (detached)
-  (cd "$SCRIPT_DIR" && docker-compose up -d --build "$@" && logs "$@")
+  (cd "$SCRIPT_DIR" && docker-compose up -d --build --force-recreate "$@")
 }
 
 function logs { # [...frontend|backend]: tails logs of containers

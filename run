@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+set -e -o pipefail
+
+SCRIPT_DIR="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+
+function start { # [...frontend|backend]: builds & starts containers (detached)
+  (cd "$SCRIPT_DIR" && docker-compose up -d --build "$@" && logs "$@")
+}
+
+function logs { # [...frontend|backend]: tails logs of containers
+  (cd "$SCRIPT_DIR" && docker-compose logs -f --tail 100 "$@")
+}
+
+function stop { # [...frontend|backend]: stops containers
+  (cd "$SCRIPT_DIR" && docker-compose stop "$@")
+}
+
+function remove { # [...frontend|backend]: removes containers
+  (cd "$SCRIPT_DIR" && docker-compose rm -f -s -v "$@")
+}
+
+function poetry { # runs poetry in backend container
+  (
+    cd "$SCRIPT_DIR"
+    if [ -z `docker-compose ps -q backend` ] || [ -z `docker ps -q --no-trunc | grep $(docker-compose ps -q backend)` ]; then
+      docker-compose run --rm backend poetry "$@"
+    else
+      docker-compose exec backend poetry "$@"
+    fi
+  )
+
+  (
+    cd "$SCRIPT_DIR"
+    docker-compose run --rm backend poetry "$@"
+  )
+}
+
+function manage { # runs django manage.py in backend container
+  (
+    cd "$SCRIPT_DIR"
+    if [ -z `docker-compose ps -q backend` ] || [ -z `docker ps -q --no-trunc | grep $(docker-compose ps -q backend)` ]; then
+      docker-compose run --rm backend python 'backend/manage.py' "$@"
+    else
+      docker-compose exec backend python 'backend/manage.py' "$@"
+    fi
+  )
+}
+
+function npm { # runs npm in frontend container
+  (
+    cd "$SCRIPT_DIR"
+    if [ -z `docker-compose ps -q frontend` ] || [ -z `docker ps -q --no-trunc | grep $(docker-compose ps -q frontend)` ]; then
+      docker-compose run --rm frontend npm "$@"
+    else
+      docker-compose exec frontend npm "$@"
+    fi
+  )
+}
+
+if [[ $# -eq 0 || "$1" == "help" ]]; then
+  sed -En 's/^function (.*) \{( #)?/\1/p' "$0"
+else
+  "$@"
+fi
